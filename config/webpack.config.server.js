@@ -1,12 +1,10 @@
-const paths = require('./paths');
-const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent'); 
-// CSS Module의 고유 className을 만들 떄 필요한 옵션
-
 const nodeExternals = require('webpack-node-externals');
 // 서버를 위해 번들링할 때는 node_modules에서 불러오는 것을 제외하고 번들링 하기 위한 라이브러리
-
+const paths = require('./paths');
 const webpack = require('webpack');
 const getClientEnvironment = require('./env');
+const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent'); 
+// CSS Module의 고유 className을 만들 떄 필요한 옵션
 
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
@@ -61,10 +59,10 @@ module.exports = {
             {
               test: cssRegex,
               exclude: cssModuleRegex,
+              // exportOnlyLocals: true 옵션을 설정해야 실제 CSS 파일을 생성하지 않습니다.
               loader: require.resolve('css-loader'),
               options: {
                 exportOnlyLocals: true
-                // exportOnlyLocals: true 옵션을 설정해야 실제 CSS 파일을 생성하지 않습니다.
               }
             },
             // CSS Module을 위한 처리

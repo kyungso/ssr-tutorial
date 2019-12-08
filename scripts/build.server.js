@@ -4,8 +4,8 @@
 process.env.BABEL_ENV = 'production';
 process.env.NODE_ENV = 'production';
 
-process.on('unhandledRejection', error => {
-    throw error;
+process.on('unhandledRejection', err => {
+    throw err;
 });
 
 require('../config/env');
