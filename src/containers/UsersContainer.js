@@ -9,11 +9,11 @@ const UsersContainer = ({ users, getUsers }) => {
     useEffect(() => {
         if(users) return; // users가 이미 유효하다면 요청하지 않음
         getUsers();
-    }, [users, getUsers]);
+    }, [getUsers, users]);
     return (
         <>
-            <Users users={users} />
-            <Preloader resolve={getUsers} />
+          <Users users={users} />
+          <Preloader resolve={getUsers} />
         </>
     );
 };
