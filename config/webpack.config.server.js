@@ -131,9 +131,9 @@ module.exports = {
       ]
     },
     resolve: {
-      modules: ['node_modules']
+      modules: ['node_modules'] // 서버에서는 node_modules를 통해 바로 불러와서 사용하게끔
     },
-    externals: [nodeExternals()],
+    externals: [nodeExternals()], // 서버를 위해 node_modules에서 불러오는 것을 제외하고 번들링
     plugins: [
         new webpack.DefinePlugin(env.stringified) // 환경변수를 주입해 줍니다.
     ]

@@ -1,68 +1,155 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Server Side Rendering
 
-## Available Scripts
+## settings
 
-In the project directory, you can run:
+#### 1. `$ yarn eject`
 
-### `yarn start`
+#### 2. create `index.server.js`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### 3. update `config/paths.js`
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+#### 4. create `config/webpack.config.server.js`
 
-### `yarn test`
+- `$ yarn add webpack-node-externals`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### 5. create `scripts/build.server.js`
 
-### `yarn build`
+#### 6. Command execution
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- `$ node scripts/build.server.js`
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+- `$ node dist/server.js`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### 7. update scripts in package.json
 
-### `yarn eject`
+``` JSON
+"start:server": "node dist/server.js",
+"build:server": "node scripts/build.server.js"
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+You can execute this command.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`$ yarn build:server`
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+`$ yarn start:server`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### 8. Server
 
-## Learn More
+#### Express (Node.js Framework)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- `$ yarn add express`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- update `index.server.js`
+
+#### 9. Data loading
+
+#### redux-thunk
+
+- `$ yarn add redux react-redux redux-thunk axios`
+
+- create `modules/users.js`
+
+- create `modules/index.js`
+
+- update `src/index.js`
+
+- create `components/Users.js`, `containers/UsersContainer.js`, `pages/UsersPage.js`, `components/Menu.js`
+
+- create `lib/Preloadcontext.js` for Promise
+ 
+<br>
+
+#### redux-saga
+
+- `$ yarn add redux-saga`
+
+- update `modules/users.js`
+
+- update `modules/index.js`
+
+- update `src/index.js`
+
+- create `components/User.js`, `containers/UserContainer.js`, `pages/UserPage.js` 
+
+- update `index.server.js`
+
+<br>
+<br>
 
 ### Code Splitting
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+#### Loadable Components
 
-### Analyzing the Bundle Size
+`$ yarn add @loadable/component @loadable/server @loadable/webpack-plugin @loadable/babel-plugin`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+**App.js**
 
-### Making a Progressive Web App
+``` JavaScript
+...
+import loadable from '@loadable/component';
+const RedPage = loadable(() => import('./pages/RedPage'));
+...
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+UI Flickers when this way.
 
-### Advanced Configuration
+#### apply webpack and babel plugin 
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+**package.json - babel**
 
-### Deployment
+``` JavaScript
+...
+"babel": {
+    "presets": [
+        "react-app"
+    ],
+    "plugins": [
+        "@loadable/babel-plugin"
+    ]
+}
+...
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+<br>
 
-### `yarn build` fails to minify
+**webpack.config.js**
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+``` JavaScript
+const LoadablePlugin = require('@loadable/webpack-plugin');
+(...)
+plugins: [
+    new LoadablePlugin(),
+    (...)
+]
+```
+
+<br>
+
+`$ yarn build`
+ 
+Check 'build/loadable-stats.json' file.
+
+<br>
+
+#### Extract the chunk file paths
+
+use 'ChunkExtractor, ChunkExtractorManager' in Loadable Components
+
+<br>
+
+#### loadableReady and hydrate
+
+- loadableReady is for redering after all scripts loading
+
+- hydrate function can use instead of render function for performance optimization
+
+<br>
+<br>
+
+### Alternatives
+
+- **Next.js** (Not compatible with react-router)
+
+- **Razzle.js** (Flickering & Not working on Loadable Components)
+
+
