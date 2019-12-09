@@ -35,7 +35,7 @@ You can execute this command.
 
 #### 8. Server
 
-#### Express (Node.js Framework)
+#### 8-1) Express (Node.js Framework)
 
 - `$ yarn add express`
 
@@ -43,7 +43,7 @@ You can execute this command.
 
 #### 9. Data loading
 
-#### redux-thunk
+#### 9-1) redux-thunk
 
 - `$ yarn add redux react-redux redux-thunk axios`
 
@@ -59,7 +59,7 @@ You can execute this command.
  
 <br>
 
-#### redux-saga
+#### 9-2) redux-saga
 
 - `$ yarn add redux-saga`
 
@@ -78,7 +78,7 @@ You can execute this command.
 
 ### Code Splitting
 
-#### Loadable Components
+#### 1) Loadable Components
 
 `$ yarn add @loadable/component @loadable/server @loadable/webpack-plugin @loadable/babel-plugin`
 
@@ -93,7 +93,7 @@ const RedPage = loadable(() => import('./pages/RedPage'));
 
 UI Flickers when this way.
 
-#### apply webpack and babel plugin 
+#### 2) apply webpack and babel plugin 
 
 **package.json - babel**
 
@@ -131,13 +131,13 @@ Check 'build/loadable-stats.json' file.
 
 <br>
 
-#### Extract the chunk file paths
+#### 3) Extract the chunk file paths
 
 use 'ChunkExtractor, ChunkExtractorManager' in Loadable Components
 
 <br>
 
-#### loadableReady and hydrate
+#### 4) loadableReady and hydrate
 
 - loadableReady is for redering after all scripts loading
 
